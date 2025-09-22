@@ -1,0 +1,87 @@
+<div class="user-form">
+  <h3>Add New User</h3>
+
+  <form #userForm = "ngForm" (ngSubmit)="onSubmit(userForm)">
+    <!-- Name -->
+    <label for="name">Name</label>
+    <input
+      id="name"
+      type="text"
+      name="name"
+      placeholder="Enter full name"
+      [(ngModel)]="name"
+      required
+      #nameCtrl="ngModel"
+    />
+
+    @if(nameCtrl.invalid && nameCtrl.touched){
+    @if(nameCtrl.errors?.['required']){
+    <small class="error">Name is required.</small>
+    } @else if(nameCtrl.errors?.['minlength']){
+    <small class="error">Name must be at least 3 characters long.</small>
+    } }
+
+    <!-- Email -->
+    <label for="email">Email</label>
+    <input
+      id="email"
+      type="email"
+      name="email"
+      placeholder="Enter email address"
+      [(ngModel)]="email"
+      required
+      email
+      #emailCtrl="ngModel"
+    />
+
+    @if(emailCtrl.invalid && emailCtrl.touched){
+    @if(emailCtrl.errors?.['required']){
+    <small class="error">Email is required.</small>
+    } @else if(emailCtrl.errors?.['email']){
+    <small class="error">Email must be valid one</small>
+    } }
+
+    <!-- Role -->
+    <label for="role">Role</label>
+    <select
+      id="role"
+      name="role"
+      [(ngModel)]="role"
+      required
+      #roleCtrl="ngModel"
+    >
+      <option value="admin">Admin</option>
+      <option value="user">User</option>
+      <option value="actor">Actor</option>
+    </select>
+
+    @if(roleCtrl.invalid && roleCtrl.touched){
+    @if(roleCtrl.errors?.['required']){
+    <small class="error">Role is required.</small>
+    } }
+
+    <!-- Status -->
+    <label for="status">Status</label>
+    <select
+      id="status"
+      name="status"
+      [(ngModel)]="status"
+      required
+      #statusCtrl="ngModel"
+    >
+      <option value="active">Active</option>
+      <option value="inactive">Inactive</option>
+    </select>
+
+    @if(statusCtrl.invalid && statusCtrl.touched){
+    @if(statusCtrl.errors?.['required']){
+    <small class="error">Status is required.</small>
+    } }
+
+    <!-- Actions -->
+    <div class="actions">
+      <button type="submit" class="save">Save</button>
+      <button type="reset" class="cancel">Cancel</button>
+    </div>
+  </form>
+</div>

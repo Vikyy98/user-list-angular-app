@@ -1,0 +1,30 @@
+<app-header (isAddUserClicked)="isToAddUser($event)" />
+<div class="user-manager">
+  <!-- Filter Sidebar -->
+  <app-filter
+    class="sidebar"
+    (selectedStatus)="filterUsersByStatus($event)"
+    [userStats]="userStats()"
+  />
+
+  <!-- User List -->
+  <app-user-list
+    class="user-list"
+    [userList]="filteredUsers()"
+    (isShowUserDetail)="onClickUser($event)"
+  />
+
+  @if(isToShowUserDetail()){
+  <!-- User Details -->
+  <app-user-detail
+    class="user-details"
+    (updatedUser)="updateUserInList($event)"
+    [selectedUser]="selectedUser()"
+    (deleteUserID)="deleteUserFromList($event)"
+  />
+  }
+  <!-- User Form -->
+  @if(isShowUserForm()){
+  <app-user-form class="user-form" (newUser)="addUserToList($event)" />
+  }
+</div>

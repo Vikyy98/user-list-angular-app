@@ -1,0 +1,49 @@
+<h3>User Details</h3>
+
+<form #userDetail="ngForm" (ngSubmit)="onSubmit(userDetail)">
+  <label>Name</label>
+  <input
+    type="text"
+    name="name"
+    [(ngModel)]="name"
+    required
+    #nameCtrl="ngModel"
+  />
+
+  @if(nameCtrl.invalid && nameCtrl.touched){ @if(nameCtrl.errors?.['required']){
+  <small class="error">Name is required.</small>
+  } }
+
+  <label>Email</label>
+  <input
+    type="email"
+    name="email"
+    [(ngModel)]="email"
+    required
+    email
+    #emailCtrl="ngModel"
+  />
+
+  @if(emailCtrl.invalid && emailCtrl.touched){
+  @if(emailCtrl.errors?.['required']){
+  <small class="error">Email is required.</small>
+  } @else if(emailCtrl.errors?.['email']){
+  <small class="error">Email must be valid one</small>
+  } }
+
+  <label>Role</label>
+  <select name="role" [(ngModel)]="role" required #roleCtrl="ngModel">
+    <option value="admin">Admin</option>
+    <option value="user">User</option>
+    <option value="actor">Actor</option>
+  </select>
+
+  @if(roleCtrl.invalid && roleCtrl.touched){ @if(roleCtrl.errors?.['required']){
+  <small class="error">Role is required.</small>
+  } }
+
+  <div class="actions">
+    <button type="submit" class="save">Save</button>
+    <button type="button" (click)="deleteUser()" class="delete">Delete</button>
+  </div>
+</form>

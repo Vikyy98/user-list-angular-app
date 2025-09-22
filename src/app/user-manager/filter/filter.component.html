@@ -1,0 +1,17 @@
+<h3>Filters</h3>
+
+<label for="status">Status</label>
+<select id="status" (click)="onToggleStatus()">
+  <option value="all">All</option>
+  <option value="active">Active</option>
+  <option value="inactive">Inactive</option>
+</select>
+
+<div class="view-toggle">
+  <button>☰</button>
+  <button>⬚</button>
+</div>
+
+<h4>Statistics</h4>
+<p>Total Users: {{ userStats().total }}</p>
+<p>Active: {{ userStats().active }} / Inactive: {{ userStats().inactive }}</p>

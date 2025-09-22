@@ -1,0 +1,38 @@
+<h3>User List</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Avatar</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (user of userList(); track user.id) {
+    <tr (click)="showUserDetail(user.id)">
+      <td>
+        <img src="https://i.pravatar.cc/32?img=1" alt="Avatar" class="avatar" />
+      </td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.role }}</td>
+      <td
+        [class]="{
+          active: user.status == 'active',
+          inactive: user.status == 'inactive'
+        }"
+      >
+        {{ user.status }}
+      </td>
+    </tr>
+    } @if(userList().length === 0){
+    <tr>
+      <td colspan="5" style="text-align: center; padding: 1rem">
+        No users found.
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>

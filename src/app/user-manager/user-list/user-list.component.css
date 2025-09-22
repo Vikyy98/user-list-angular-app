@@ -1,0 +1,25 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.6rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.active {
+  color: green;
+  font-weight: bold;
+}
+.inactive {
+  color: red;
+  font-weight: bold;
+}
