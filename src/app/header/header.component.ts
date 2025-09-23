@@ -1,4 +1,5 @@
-import { Component, output } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-header',
@@ -8,8 +9,8 @@ import { Component, output } from '@angular/core';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  isAddUserClicked = output<boolean>();
+  private userService = inject(UserService);
   AddUser() {
-    this.isAddUserClicked.emit(true);
+    this.userService.onClickToggleUserForm(true);
   }
 }

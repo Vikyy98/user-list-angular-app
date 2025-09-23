@@ -1,7 +1,15 @@
-import { Component, effect, input, output, signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { User } from '../user.model';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -11,28 +19,33 @@ import { CommonModule } from '@angular/common';
   styleUrl: './user-detail.component.css',
 })
 export class UserDetailComponent {
-  selectedUser = input.required<User>();
-  updatedUser = output<User>();
-  deleteUserID = output<number>();
+  //selectedUser = input.required<User>();
+  // updatedUser = output<User>();
+  //deleteUserID = output<number>();
+  private userService = inject(UserService);
 
   id: number = 0;
   name: string = '';
   email: string = '';
   role: string = '';
 
-  constructor() {
+  ngOnInit() {
     effect(() => {
-      if (this.selectedUser()) {
-        this.id = this.selectedUser().id;
-        this.name = this.selectedUser().name;
-        this.email = this.selectedUser().email;
-        this.role = this.selectedUser().role;
+      const user = this.userService.selectedUser();
+      if (user) {
+        this.id = user.id;
+        this.name = user.name;
+        this.email = user.email;
+        this.role = user.role;
       }
     });
   }
 
   deleteUser() {
-    this.deleteUserID.emit(this.id);
+    const selectedUserId = this.userService.selectedUser()?.id;
+    if (selectedUserId) {
+      this.userService.deleteUserFromList(selectedUserId);
+    }
   }
 
   onSubmit(Form: NgForm) {
@@ -41,12 +54,17 @@ export class UserDetailComponent {
       return;
     }
 
-    this.updatedUser.emit({
-      id: this.selectedUser()?.id as number,
-      name: this.name as string,
-      email: this.email as string,
-      role: this.role as string,
-      status: this.selectedUser()?.status as string,
+    const selectedUser = this.userService.selectedUser();
+    if (!selectedUser) {
+      return;
+    }
+
+    this.userService.updateUserInList({
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      role: this.role,
+      status: selectedUser.status,
     });
   }
 }

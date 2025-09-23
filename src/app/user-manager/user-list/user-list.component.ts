@@ -1,5 +1,6 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { User } from '../user.model';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-user-list',
@@ -9,10 +10,9 @@ import { User } from '../user.model';
   styleUrl: './user-list.component.css',
 })
 export class UserListComponent {
-  userList = input<User[]>([]);
-  isShowUserDetail = output<number>();
+  public userService = inject(UserService);
+
   showUserDetail(userId: number) {
-    this.isShowUserDetail.emit(userId);
-    console.log(userId);
+    this.userService.onSelectUser(userId);
   }
 }

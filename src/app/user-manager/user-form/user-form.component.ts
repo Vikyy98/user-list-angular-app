@@ -1,7 +1,8 @@
-import { Component, output, signal } from '@angular/core';
+import { Component, inject, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { User } from '../user.model';
+import { UserService } from '../../user.service';
 @Component({
   selector: 'app-user-form',
   standalone: true,
@@ -10,17 +11,19 @@ import { User } from '../user.model';
   styleUrl: './user-form.component.css',
 })
 export class UserFormComponent {
+  private userService = inject(UserService);
   name: string = '';
   email: string = '';
   role: string = '';
   status: string = '';
-  newUser = output<User>();
+
   onSubmit(Form: NgForm) {
     if (Form.invalid) {
       Form.control.markAllAsTouched();
       return;
     }
-    this.newUser.emit({
+
+    this.userService.AddUserToList({
       id: Date.now(),
       name: this.name,
       email: this.email,

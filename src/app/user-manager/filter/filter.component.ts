@@ -1,5 +1,6 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { UserStatistics } from '../user.model';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-filter',
@@ -9,14 +10,18 @@ import { UserStatistics } from '../user.model';
   styleUrl: './filter.component.css',
 })
 export class FilterComponent {
-  selectedStatus = output<string>();
-  userStats = input.required<UserStatistics>();
+  private userService = inject(UserService);
+
+  public get userStats(): UserStatistics {
+    return this.userService.userStats();
+  }
 
   onToggleStatus() {
-    console.log('Status filter clicked');
-    console.log((document.getElementById('status') as HTMLSelectElement).value);
-    this.selectedStatus.emit(
-      (document.getElementById('status') as HTMLSelectElement).value
+    this.userService.onFilterStatusChange(
+      (document.getElementById('status') as HTMLSelectElement).value as
+        | 'all'
+        | 'active'
+        | 'inactive'
     );
   }
 }
