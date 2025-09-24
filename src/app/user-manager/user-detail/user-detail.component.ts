@@ -19,9 +19,6 @@ import { UserService } from '../../user.service';
   styleUrl: './user-detail.component.css',
 })
 export class UserDetailComponent {
-  //selectedUser = input.required<User>();
-  // updatedUser = output<User>();
-  //deleteUserID = output<number>();
   private userService = inject(UserService);
 
   id: number = 0;
@@ -29,8 +26,9 @@ export class UserDetailComponent {
   email: string = '';
   role: string = '';
 
-  ngOnInit() {
+  constructor() {
     effect(() => {
+      console.log(this.userService.selectedUser());
       const user = this.userService.selectedUser();
       if (user) {
         this.id = user.id;
